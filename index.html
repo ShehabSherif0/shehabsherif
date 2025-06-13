@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shehab Sherif Tawfik - Digital Portfolio</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* --- Core Styling & Modern Aesthetic --- */
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020412;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* --- Animated Background Blobs --- */
+        .background-blob1, .background-blob2 { position: absolute; border-radius: 50%; z-index: -1; filter: blur(100px); pointer-events: none; }
+        .background-blob1 { top: 10%; left: -20%; width: 50vw; height: 50vw; background: linear-gradient(180deg, rgba(34, 211, 238, 0.08) 0%, rgba(168, 85, 247, 0) 100%); animation: moveBlob1 35s infinite alternate ease-in-out; }
+        .background-blob2 { bottom: 15%; right: -20%; width: 50vw; height: 50vw; background: linear-gradient(180deg, rgba(168, 85, 247, 0.08) 0%, rgba(34, 211, 238, 0) 100%); animation: moveBlob2 40s infinite alternate ease-in-out; }
+        @keyframes moveBlob1 { from { transform: translate(-10%, -10%) rotate(0deg); } to { transform: translate(10%, 10%) rotate(360deg); } }
+        @keyframes moveBlob2 { from { transform: translate(10%, 10%) rotate(0deg); } to { transform: translate(-10%, -10%) rotate(360deg); } }
+
+        /* --- Gradients and Effects --- */
+        .gradient-text { background: linear-gradient(90deg, #22d3ee, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .gradient-bg { background: linear-gradient(90deg, #06b6d4, #9333ea); }
+        
+        /* --- Enhanced Card Hover Effect --- */
+        .card {
+            background-color: rgba(15, 23, 42, 0.6); border: 1px solid #1e293b;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border-radius: 0.75rem;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(34, 211, 238, 0.4);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.1), 0 0 15px rgba(34, 211, 238, 0.1);
+        }
+
+        /* --- UI Elements --- */
+        .section { padding: 6rem 1.5rem; position: relative; }
+        .section-header h2 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 1rem; }
+        .section-header .subtitle { font-size: 1.125rem; color: #94a3b8; max-width: 600px; margin: 0.5rem auto 0; }
+        .section-header::after { content: ''; display: block; width: 80px; height: 3px; margin: 1.5rem auto 4rem; background: linear-gradient(90deg, #22d3ee, #a855f7); border-radius: 2px; }
+
+        /* --- Experience --- */
+        .timeline-item { position: relative; padding-left: 3.5rem; padding-bottom: 3rem; border-left: 2px solid #334155; }
+        .timeline-item:last-child { border-left-color: transparent; }
+        .timeline-logo { position: absolute; left: 0; top: 0; transform: translateX(-50%); width: 3rem; height: 3rem; background-color: #1e293b; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid #334155; padding: 0.5rem; }
+        .timeline-logo img { object-fit: contain; max-height: 100%; max-width: 100%; }
+        
+        /* --- Contact Form --- */
+        .form-input {
+            background-color: rgba(30, 41, 59, 0.5); border: 1px solid #334155;
+            padding: 0.75rem 1rem; border-radius: 0.5rem; width: 100%;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: #e2e8f0;
+        }
+        .form-input::placeholder { color: #94a3b8; }
+        .form-input:focus {
+            outline: none; border-color: #22d3ee;
+            box-shadow: 0 0 10px rgba(34, 211, 238, 0.3);
+        }
+
+        /* --- Back to Top Button --- */
+        #back-to-top { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(90deg, #06b6d4, #9333ea); color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s, transform 0.3s; z-index: 100; transform: translateY(20px); }
+        #back-to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        
+        /* --- Animations --- */
+        .scroll-animate { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); transition-delay: var(--delay, 0s); }
+        .scroll-animate.is-visible { opacity: 1; transform: translateY(0); }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .scroller-inner { animation: scroll 40s linear infinite; }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="background-blob1"></div>
+    <div class="background-blob2"></div>
+
+    <!-- Header -->
+    <header class="bg-black/30 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-800/50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold tracking-wider gradient-text">SST</a>
+            <div class="hidden md:flex space-x-8 items-center text-sm">
+                <a href="#about" class="hover:text-cyan-400 transition-colors">About</a>
+                <a href="#experience" class="hover:text-cyan-400 transition-colors">Experience</a>
+                <a href="#skills" class="hover:text-cyan-400 transition-colors">Skills</a>
+                <a href="#contact" class="hover:text-cyan-400 transition-colors">Contact</a>
+            </div>
+            <a href="https://www.linkedin.com/in/shehabsheriftawfik" target="_blank" rel="noopener noreferrer" class="hidden md:inline-block px-5 py-2 text-sm font-medium text-white gradient-bg rounded-lg shadow-lg hover:scale-105 transition-transform">Connect on LinkedIn</a>
+            <button id="menu-btn" class="md:hidden text-white focus:outline-none"><i class="fas fa-bars text-xl"></i></button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900">
+            <a href="#about" class="block py-3 px-6 text-sm hover:bg-slate-800">About</a>
+            <a href="#experience" class="block py-3 px-6 text-sm hover:bg-slate-800">Experience</a>
+            <a href="#skills" class="block py-3 px-6 text-sm hover:bg-slate-800">Skills</a>
+            <a href="#contact" class="block py-3 px-6 text-sm hover:bg-slate-800">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <section class="min-h-[90vh] flex items-center">
+             <div class="max-w-4xl">
+                <p class="text-lg font-medium text-cyan-400 mb-2 scroll-animate">Shehab Sherif Tawfik</p>
+                <h1 id="hero-headline" class="text-4xl md:text-6xl font-extrabold tracking-tighter text-white scroll-animate" style="--delay: 0.1s;"></h1>
+                <p class="mt-6 max-w-2xl text-lg text-slate-400 scroll-animate" style="--delay: 0.2s;">Business Administration major with a Finance and Investment minor, with separate experience in community management and visual design ~ used to make complex ideas more accessible and applicable in real-world contexts.</p>
+                <div class="mt-10 flex gap-4 scroll-animate" style="--delay: 0.3s;">
+                    <a href="#contact" class="px-6 py-3 font-semibold text-white gradient-bg rounded-lg shadow-lg hover:scale-105 transition-transform flex items-center gap-2">Get in Touch <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="https://drive.google.com/drive/folders/11LNRlLYZ_v7rwb8aj3X2ZKYNceg41NYd" target="_blank" rel="noopener noreferrer" class="px-6 py-3 font-medium bg-slate-800 text-slate-300 rounded-lg hover:bg-slate-700 transition-colors flex items-center gap-2">View Design Portfolio <i class="fa-solid fa-folder-open"></i></a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Social Proof Scroller -->
+        <div class="w-full inline-flex flex-nowrap overflow-hidden [mask-image:_linear_gradient(to_right,transparent_0,_black_128px,_black_calc(100%-200px),transparent_100%)] mb-12">
+            <ul class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll scroller-inner">
+                 <li><img src="https://avatars.githubusercontent.com/u/22185043?s=280&v=4" class="h-10 filter grayscale hover:grayscale-0 transition-all" alt="NetEase Games"/></li>
+                 <li><img src="https://www.cies.ch/fileadmin/images/EDUCATION/Network/CU/CU_logo.png" class="h-12 filter grayscale hover:grayscale-0 transition-all" alt="Cairo University"/></li>
+                 <li><img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Duke_University_seal.svg/1200px-Duke_University_seal.svg.png" class="h-10 filter grayscale hover:grayscale-0 transition-all" alt="Duke University"/></li>
+                 <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Edraak_Logo.svg/1200px-Edraak_Logo.svg.png" class="h-6 filter grayscale hover:grayscale-0 transition-all" alt="Edraak"/></li>
+                 <li><img src="https://cdn3.emoji.gg/emojis/8111-moderator-logo.png" class="h-10 filter grayscale hover:grayscale-0 transition-all" alt="Moderator Community"/></li>
+                 <li><img src="https://oit.duke.edu/sites/default/files/styles/large/public/thumbnails/image/linkedin%20learning%20logo.png?itok=O2hbD0eX" class="h-6 filter grayscale hover:grayscale-0 transition-all" alt="LinkedIn Learning"/></li>
+            </ul>
+             <ul class="flex items-center justify-center md:justify-start [&_li]:mx-8 [&_img]:max-w-none animate-infinite-scroll scroller-inner" aria-hidden="true">
+                 <li><img src="https://avatars.githubusercontent.com/u/22185043?s=280&v=4" class="h-10 filter grayscale hover:grayscale-0 transition-all" alt="NetEase Games"/></li>
+                 <li><img src="https://www.cies.ch/fileadmin/images/EDUCATION/Network/CU/CU_logo.png" class="h-12 filter grayscale hover:grayscale-0 transition-all" alt="Cairo University"/></li>
+                 <li><img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Duke_University_seal.svg/1200px-Duke_University_seal.svg.png" class="h-10 filter grayscale hover:grayscale-0 transition-all" alt="Duke University"/></li>
+                 <li><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Edraak_Logo.svg/1200px-Edraak_Logo.svg.png" class="h-6 filter grayscale hover:grayscale-0 transition-all" alt="Edraak"/></li>
+                 <li><img src="https://cdn3.emoji.gg/emojis/8111-moderator-logo.png" class="h-10 filter grayscale hover:grayscale-0 transition-all" alt="Moderator Community"/></li>
+                 <li><img src="https://oit.duke.edu/sites/default/files/styles/large/public/thumbnails/image/linkedin%20learning%20logo.png?itok=O2hbD0eX" class="h-6 filter grayscale hover:grayscale-0 transition-all" alt="LinkedIn Learning"/></li>
+            </ul>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <div class="text-center section-header scroll-animate">
+                <h2>About Me</h2>
+                <p class="subtitle">I combine a business mindset with hands-on community leadership to create clarity, engagement, and impact.</p>
+            </div>
+            <div class="max-w-4xl mx-auto text-lg text-slate-300 space-y-4 text-center scroll-animate" style="--delay: 0.1s;">
+                 <p>With a background in Business Administration and Finance, I’ve managed large-scale communities especially at NetEase, led platform operations, and supported cross-functional teams. I specialize in turning complex ideas into clear, visual communication #aligning strategy, design, and user needs to create lasting impact.</p>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
+        <section id="featured-projects" class="section">
+            <div class="text-center section-header scroll-animate"><h2>Featured Projects & Achievements</h2><p class="subtitle">Highlights of my work demonstrating key capabilities.</p></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left max-w-6xl mx-auto">
+                <div class="scroll-animate card p-8" style="--delay: 0.1s;"><i class="fa-solid fa-users-gear text-3xl gradient-text mb-4"></i><h3 class="font-bold text-lg text-white">International Team Leadership</h3><p class="text-sm text-slate-400 mt-2">Successfully supervised and mentored a global team of moderators at NetEase Games, improving team cohesion and performance through consistent feedback and cross-cultural communication training.</p></div>
+                <div class="scroll-animate card p-8" style="--delay: 0.2s;"><i class="fa-solid fa-lightbulb text-3xl gradient-text mb-4"></i><h3 class="font-bold text-lg text-white">Engagement Strategy Development</h3><p class="text-sm text-slate-400 mt-2">Designed and implemented new engagement initiatives for a 250,000+ member community, resulting in measurable growth in user interaction and a more positive digital environment.</p></div>
+                <div class="scroll-animate card p-8" style="--delay: 0.3s;"><i class="fa-solid fa-file-invoice-dollar text-3xl gradient-text mb-4"></i><h3 class="font-bold text-lg text-white">Behavioral Finance Analysis</h3><p class="text-sm text-slate-400 mt-2">Applied principles from my Duke University certification to analyze market anomalies and psychological factors in financial decision-making, presenting findings in a clear, compelling report.</p></div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section">
+             <div class="text-center section-header scroll-animate"><h2>Professional Journey</h2><p class="subtitle">A timeline of my key roles and responsibilities.</p></div>
+             <div class="max-w-3xl mx-auto">
+                <div class="timeline-item scroll-animate" style="--delay: 0.1s;">
+                    <div class="timeline-logo"><img src="https://cdn3.emoji.gg/emojis/8111-moderator-logo.png" alt="Moderator Logo"/></div>
+                    <h3 class="text-xl font-bold text-white mb-1">Community Staff / Moderator <span class="text-cyan-400 text-base font-medium">@ Online Platform</span></h3>
+                    <p class="text-sm text-slate-400 mb-4">Start Date – Present (Volunteer)</p>
+                    <p class="text-slate-300">Actively manage a community of 250,000+ members, developing strategies to optimize user engagement, resolve conflicts, and foster a positive, inclusive environment.</p>
+                </div>
+                <div class="timeline-item scroll-animate" style="--delay: 0.2s;">
+                    <div class="timeline-logo"><img src="https://avatars.githubusercontent.com/u/22185043?s=280&v=4" alt="NetEase Games Logo"/></div>
+                    <h3 class="text-xl font-bold text-white mb-1">Platform Manager & Supervisor <span class="text-cyan-400 text-base font-medium">@ NetEase Games</span></h3>
+                    <p class="text-sm text-slate-400 mb-4">June 2019 – June 2022 (Remote)</p>
+                    <p class="text-slate-300">Led and supervised a diverse, international team of moderators for titles like *Creative Destruction*. Provided mentorship, performance oversight, and acted as a key liaison between the user community and internal development teams.</p>
+                </div>
+             </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="section">
+             <div class="text-center section-header scroll-animate"><h2>Core Competencies</h2><p class="subtitle">A multi-faceted skill set to tackle diverse challenges.</p></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <div class="card p-6 scroll-animate" style="--delay: 0.1s;"><h3 class="font-bold text-lg text-white mb-3 flex items-center gap-3"><i class="fa-solid fa-users-gear text-xl text-cyan-400"></i> Management & Leadership</h3><ul class="text-slate-400 text-sm space-y-2"><li>Team Leadership & Supervision</li><li>Performance Management</li><li>Project Coordination & Motivation</li></ul></div>
+                 <div class="card p-6 scroll-animate" style="--delay: 0.2s;"><h3 class="font-bold text-lg text-white mb-3 flex items-center gap-3"><i class="fa-solid fa-comments text-xl text-cyan-400"></i> Community & Communication</h3><ul class="text-slate-400 text-sm space-y-2"><li>Community Moderation (Discord/FB, Etc)</li><li>Cross-Cultural Communication</li><li>User Engagement Strategies</li></ul></div>
+                 <div class="card p-6 scroll-animate" style="--delay: 0.3s;"><h3 class="font-bold text-lg text-white mb-3 flex items-center gap-3"><i class="fa-solid fa-chart-line text-xl text-cyan-400"></i> Business & Finance & Investment</h3><ul class="text-slate-400 text-sm space-y-2"><li>Business Administration Principles</li><li>Finance & Investment Fundamentals</li><li>Behavioral Finance Concepts</li></ul></div>
+                <div class="card p-6 scroll-animate" style="--delay: 0.4s;"><h3 class="font-bold text-lg text-white mb-3 flex items-center gap-3"><i class="fa-solid fa-palette text-xl text-cyan-400"></i> Design & Technical</h3><ul class="text-slate-400 text-sm space-y-2"><li>Graphic & Visual Design</li><li>Presentation Design</li><li>Social Media Platforms</li></ul></div>
+            </div>
+        </section>
+        
+        <!-- Education & Certifications -->
+        <section id="education" class="section">
+            <div class="text-center section-header scroll-animate"><h2>Education & Certifications</h2></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="card p-8 scroll-animate" style="--delay: 0.1s;">
+                    <img src="https://www.cies.ch/fileadmin/images/EDUCATION/Network/CU/CU_logo.png" alt="Cairo University Logo" class="h-16 mb-4">
+                    <h3 class="font-bold text-xl text-white">Cairo University</h3>
+                    <p class="text-md text-cyan-400 mt-1">Bachelor of Business Administration</p>
+                    <p class="text-sm text-slate-400">Major: Business Admin | Minor: Finance</p>
+                    <p class="text-sm text-slate-500 mt-2">2021 – 2025</p>
+                </div>
+                <div class="card p-8 scroll-animate" style="--delay: 0.2s;">
+                     <h3 class="font-bold text-xl text-white mb-4">Professional Development</h3>
+                     <ul class="space-y-4 text-left">
+                        <li class="flex items-start gap-4"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ce/Duke_University_seal.svg/1200px-Duke_University_seal.svg.png" class="h-8 mt-1" alt="Duke Logo"/><div><p class="font-semibold text-slate-200">Behavioral Finance</p><p class="text-xs text-slate-400">Duke University (Coursera), 2024</p></div></li>
+                        <li class="flex items-start gap-4"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Edraak_Logo.svg/1200px-Edraak_Logo.svg.png" class="h-4 mt-2" alt="Edraak Logo"/><div><p class="font-semibold text-slate-200">Investment Principles & Customer Service Mastery</p><p class="text-xs text-slate-400">Edraak, 2023-2024</p></div></li>
+                        <li class="flex items-start gap-4"><img src="https://oit.duke.edu/sites/default/files/styles/large/public/thumbnails/image/linkedin%20learning%20logo.png?itok=O2hbD0eX" class="h-5 mt-1" alt="LinkedIn Learning Logo"/><div><p class="font-semibold text-slate-200">Professional Soft Skills Path</p><p class="text-xs text-slate-400">LinkedIn Learning, 2022 (Incl. Emotional Intelligence, Critical Thinking, Persuasion)</p></div></li>
+                     </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="text-center section-header scroll-animate"><h2 class="gradient-text">Let's Connect</h2><p class="subtitle">I'm actively seeking opportunities where I can contribute to a team and help drive success. If you have a project or role in mind, I'd love to hear from you.</p></div>
+            <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                <div class="scroll-animate" style="--delay: 0.1s;">
+                    <h3 class="text-2xl font-bold text-white mb-6">Contact Information</h3>
+                    <div class="space-y-6">
+                        <a href="mailto:shehabsheriftawfik@gmail.com" class="flex items-center gap-4 group"><i class="fa-solid fa-envelope text-2xl text-cyan-400 group-hover:scale-110 transition-transform"></i><div><p class="font-semibold text-white">Email</p><p class="text-slate-400 group-hover:text-cyan-300 transition-colors">shehabsheriftawfik@gmail.com</p></div></a>
+                        <a href="https://linkedin.com/in/shehabsheriftawfik" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group"><i class="fa-brands fa-linkedin text-2xl text-cyan-400 group-hover:scale-110 transition-transform"></i><div><p class="font-semibold text-white">LinkedIn</p><p class="text-slate-400 group-hover:text-cyan-300 transition-colors">in/shehabsheriftawfik</p></div></a>
+                        <a href="https://www.facebook.com/S.hehab.Sherif.S/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group"><i class="fa-brands fa-facebook text-2xl text-cyan-400 group-hover:scale-110 transition-transform"></i><div><p class="font-semibold text-white">Facebook</p><p class="text-slate-400 group-hover:text-cyan-300 transition-colors">Shehab Sherif</p></div></a>
+                        <a href="#" class="flex items-center gap-4 group"><i class="fa-brands fa-discord text-2xl text-cyan-400 group-hover:scale-110 transition-transform"></i><div><p class="font-semibold text-white">Discord</p><p class="text-slate-400 group-hover:text-cyan-300 transition-colors">hyyperr.</p></div></a>
+                         <div class="flex items-center gap-4"><i class="fa-solid fa-location-dot text-2xl text-cyan-400"></i><div><p class="font-semibold text-white">Location</p><p class="text-slate-400">Giza & Cairo Egypt</p><p class="text-slate-400">(Available for Remote Work as Well)</p></div></div>
+                    </div>
+                </div>
+                 <form id="contact-form" class="card p-8 space-y-4 scroll-animate" style="--delay: 0.2s;">
+                    <input type="text" name="name" placeholder="Your Name" class="form-input" required><input type="email" name="email" placeholder="Your Email" class="form-input" required><textarea name="message" placeholder="Your Message" rows="5" class="form-input" required></textarea><button type="submit" class="w-full py-3 font-semibold text-white gradient-bg rounded-lg shadow-lg hover:scale-105 transition-transform flex items-center justify-center gap-2">Send Message <i class="fa-solid fa-paper-plane"></i></button><p id="form-status" class="text-center text-sm mt-2"></p>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/50">
+        <div class="container mx-auto px-6 py-12 grid md:grid-cols-3 gap-8">
+            <div class="md:col-span-2"><h3 class="text-xl font-bold gradient-text">Shehab Sherif Tawfik</h3><p class="text-sm text-slate-400 mt-2">A results-driven person combining financial insight with hands-on community leadership to foster engagement, growth, and strategic impact.</p></div>
+            <div><h4 class="font-semibold text-white mb-2">Navigation</h4><div class="space-y-2 text-sm"><a href="#about" class="block text-slate-400 hover:text-cyan-400">About</a><a href="#process" class="block text-slate-400 hover:text-cyan-400">Process</a><a href="#experience" class="block text-slate-400 hover:text-cyan-400">Experience</a><a href="#contact" class="block text-slate-400 hover:text-cyan-400">Contact</a></div></div>
+            <div><h4 class="font-semibold text-white mb-2">Current Time</h4><div id="live-time" class="text-slate-400 text-sm mt-2"></div></div>
+        </div>
+        <div class="text-center py-6 border-t border-slate-800/50"><p class="text-slate-500 text-sm">&copy; 2025 Shehab Sherif Tawfik. All Rights Reserved.</p></div>
+    </footer>
+    
+    <a href="#" id="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></a>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Consolidated All Scripts ---
+            
+            // Typewriter Effect
+            const headline = document.getElementById('hero-headline');
+            if (headline) {
+                const textToType = "Business, Finance, Investment, Management & Visual Design.";
+                let i = 0;
+                headline.innerHTML = ''; // Clear it first
+                function typeWriter() {
+                    if (i < textToType.length) {
+                        headline.innerHTML += textToType.charAt(i);
+                        i++;
+                        setTimeout(typeWriter, 70);
+                    }
+                }
+                typeWriter();
+            }
+
+            // Mobile Menu
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuBtn && mobileMenu) {
+                menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+                });
+            }
+
+            // Contact Form
+            const form = document.getElementById('contact-form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const formStatus = document.getElementById('form-status');
+                    formStatus.textContent = 'Thank you for your message!';
+                    formStatus.style.color = '#22d3ee';
+                    form.reset();
+                    setTimeout(() => { formStatus.textContent = ''; }, 5000);
+                });
+            }
+            
+            // Live Clock
+            const timeEl = document.getElementById('live-time');
+            function updateTime() {
+                if (!timeEl) return;
+                const now = new Date();
+                const options = { weekday: 'long', hour: 'numeric', minute: 'numeric', timeZone: 'Africa/Cairo' };
+                timeEl.textContent = now.toLocaleDateString('en-US', options);
+            }
+            updateTime();
+            setInterval(updateTime, 60000);
+
+            // Back to Top Button
+            const backToTopButton = document.getElementById('back-to-top');
+            if(backToTopButton) {
+                window.addEventListener('scroll', () => {
+                    backToTopButton.classList.toggle('show', window.pageYOffset > 300);
+                });
+            }
+            
+            // Scroll Animations
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        scrollObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.scroll-animate').forEach(el => scrollObserver.observe(el));
+        });
+    </script>
+</body>
+</html>
